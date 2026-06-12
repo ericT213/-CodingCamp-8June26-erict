@@ -599,8 +599,9 @@ input[type="number"] {
   padding: 1.5rem 0;
 }
 
-/* Each transaction row */
-.transaction-row {
+/* Each transaction row — .transaction-row (static) and .transaction-item (JS-rendered) */
+.transaction-row,
+.transaction-item {
   display: flex;
   align-items: center;
   gap: 0.625rem;
@@ -612,7 +613,8 @@ input[type="number"] {
   flex-wrap: wrap;
 }
 
-.transaction-row:hover {
+.transaction-row:hover,
+.transaction-item:hover {
   border-color: var(--accent);
 }
 
@@ -678,7 +680,8 @@ input[type="number"] {
   padding: 1rem 0;
 }
 
-.month-block {
+.month-block,
+.month-entry {
   border: 1px solid var(--border);
   border-radius: var(--radius-sm);
   overflow: hidden;
@@ -686,7 +689,8 @@ input[type="number"] {
   transition: border-color var(--transition), background-color var(--transition);
 }
 
-.month-block:last-child {
+.month-block:last-child,
+.month-entry:last-child {
   margin-bottom: 0;
 }
 
@@ -727,22 +731,26 @@ input[type="number"] {
   padding: 0.375rem 0;
 }
 
-.breakdown-row {
+.breakdown-row,
+.month-category-item {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
-  padding: 0.375rem 0.875rem 0.375rem 1.5rem;
+  justify-content: space-between;
+  gap: 1.25rem;
+  padding: 0.5rem 1rem 0.5rem 1.5rem;
   font-size: 0.875rem;
   color: var(--text-muted);
   border-bottom: 1px solid var(--border);
   transition: background-color var(--transition);
 }
 
-.breakdown-row:last-child {
+.breakdown-row:last-child,
+.month-category-item:last-child {
   border-bottom: none;
 }
 
-.breakdown-row:hover {
+.breakdown-row:hover,
+.month-category-item:hover {
   background-color: var(--bg-panel);
 }
 
@@ -766,6 +774,31 @@ input[type="number"] {
   color: var(--text-muted);
   min-width: 3.5rem;
   text-align: right;
+}
+
+/* JS-rendered monthly breakdown spans (.month-category-item children) */
+.cat-name {
+  flex: 1;
+  font-weight: 500;
+  color: var(--text);
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.cat-amount {
+  white-space: nowrap;
+  font-weight: 500;
+  flex-shrink: 0;
+}
+
+.cat-percent {
+  white-space: nowrap;
+  color: var(--text-muted);
+  min-width: 3.5rem;
+  text-align: right;
+  flex-shrink: 0;
 }
 
 /* ------------------------------------------------------------
