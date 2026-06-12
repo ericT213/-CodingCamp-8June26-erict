@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Expense Tracker</title>
+    <link rel="stylesheet" href="styles/main.css" />
+  </head>
+  <body>
+
+    <!-- ===================== HEADER ===================== -->
+    <header class="app-header">
+      <h1 class="app-title">Expense Tracker</h1>
+      <button
+        id="theme-toggle"
+        type="button"
+        aria-label="Switch to dark mode"
+      >
+        🌙 Dark Mode
+      </button>
+    </header>
+
+    <!-- ===================== MAIN LAYOUT ===================== -->
+    <main class="app-main">
+
+      <!-- =========== LEFT PANEL =========== -->
+      <aside class="panel panel-left">
+
+        <!-- Transaction Form -->
+        <section class="card" aria-labelledby="form-heading">
+          <h2 id="form-heading">Add Transaction</h2>
+          <form id="transaction-form" novalidate>
+
+            <div class="field-group">
+              <label for="item-name">Item Name</label>
+              <input
+                type="text"
+                id="item-name"
+                name="item-name"
+                placeholder="e.g. Coffee"
+                maxlength="100"
+                autocomplete="off"
+              />
+              <span id="error-item-name" class="field-error" role="alert" aria-live="polite"></span>
+            </div>
+
+            <div class="field-group">
+              <label for="amount">Amount</label>
+              <input
+                type="number"
+                id="amount"
+                name="amount"
+                placeholder="0.00"
+                min="0.01"
+                max="1000000"
+                step="0.01"
+              />
+              <span id="error-amount" class="field-error" role="alert" aria-live="polite"></span>
+            </div>
+
+            <div class="field-group">
+              <label for="category">Category</label>
+              <select id="category" name="category">
+                <option value="">-- Select a category --</option>
+                <option value="Food">Food</option>
+                <option value="Transport">Transport</option>
+                <option value="Fun">Fun</option>
+              </select>
+              <span id="error-category" class="field-error" role="alert" aria-live="polite"></span>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Add Transaction</button>
+          </form>
+        </section>
+
+        <!-- Category Manager -->
+        <section class="card" aria-labelledby="category-manager-heading">
+          <h2 id="category-manager-heading">Manage Categories</h2>
+          <form id="category-form" novalidate>
+            <div class="field-group">
+              <label for="new-category">New Category Name</label>
+              <input
+                type="text"
+                id="new-category"
+                name="new-category"
+                placeholder="e.g. Healthcare"
+                maxlength="50"
+                autocomplete="off"
+              />
+              <span id="error-new-category" class="field-error" role="alert" aria-live="polite"></span>
+            </div>
+            <button type="submit" class="btn btn-secondary">Add Category</button>
+          </form>
+        </section>
+
+        <!-- Spending Limit -->
+        <section class="card" aria-labelledby="spending-limit-heading">
+          <h2 id="spending-limit-heading">Monthly Spending Limit</h2>
+          <form id="limit-form" novalidate>
+            <div class="field-group">
+              <label for="spending-limit-input">Spending Limit ($)</label>
+              <input
+                type="number"
+                id="spending-limit-input"
+                name="spending-limit-input"
+                placeholder="e.g. 500"
+                min="0.01"
+                step="0.01"
+              />
+              <span id="error-spending-limit" class="field-error" role="alert" aria-live="polite"></span>
+            </div>
+            <div class="btn-row">
+              <button type="submit" id="set-limit-btn" class="btn btn-primary">Set Limit</button>
+              <button type="button" id="clear-limit-btn" class="btn btn-danger">Clear Limit</button>
+            </div>
+          </form>
+        </section>
+
+      </aside><!-- /panel-left -->
+
+      <!-- =========== RIGHT PANEL =========== -->
+      <section class="panel panel-right">
+
+        <!-- Balance Display -->
+        <div class="card balance-card">
+          <h2>Total Balance</h2>
+          <p id="balance" class="balance-amount">$0.00</p>
+        </div>
+
+        <!-- Chart Container -->
+        <div class="card" id="chart-container">
+          <h2>Spending by Category</h2>
+          <canvas id="expense-chart" role="img" aria-label="Pie chart showing spending by category"></canvas>
+          <p id="chart-no-data" class="no-data-message">No data to display</p>
+        </div>
+
+        <!-- Transaction List -->
+        <div class="card">
+          <div class="list-header">
+            <h2>Transactions</h2>
+            <div class="sort-control">
+              <label for="sort-select">Sort by</label>
+              <select id="sort-select" name="sort-select">
+                <option value="date-desc">Date (newest first)</option>
+                <option value="amount-asc">Amount (lowest first)</option>
+                <option value="category-az">Category (A–Z)</option>
+              </select>
+            </div>
+          </div>
+          <ul
+            id="transaction-list"
+            class="transaction-list"
+            aria-label="Transaction list"
+            aria-live="polite"
+          >
+            <li class="placeholder-message">No transactions yet</li>
+          </ul>
+        </div>
+
+        <!-- Monthly Summary -->
+        <div class="card" id="monthly-summary" aria-label="Monthly summary" aria-live="polite">
+          <h2>Monthly Summary</h2>
+          <p class="placeholder-message">No monthly data yet</p>
+        </div>
+
+      </section><!-- /panel-right -->
+
+    </main><!-- /app-main -->
+
+    <!-- Toast notification for storage errors -->
+    <div
+      id="toast"
+      class="toast"
+      role="status"
+      aria-live="polite"
+      aria-atomic="true"
+      hidden
+    >
+      Could not save data
+    </div>
+
+    <!-- Chart.js CDN — must appear before app.js -->
+    <script
+      src="https://cdn.jsdelivr.net/npm/chart.js@4"
+      onerror="window.chartJsLoadError = true"
+    ></script>
+
+    <!-- App entry point -->
+    <script type="module" src="js/app.js"></script>
+
+  </body>
+</html>
